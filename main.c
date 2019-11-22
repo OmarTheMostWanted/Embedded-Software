@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdint.h>
+
 
 #define tes 1
 #define check(x) (x == tes)
@@ -118,20 +120,42 @@ int mangle_array(int *a , int size){
     return make_even_positive(a , size) + make_odd_negative(a , size);
 }
 
+uint8_t set_bit(uint8_t reg , int n){
+    uint8_t mask = 1;
+
+    mask = mask << n;
+
+    return mask | reg;
+}
+
 int main() {
 
+    uint8_t t = 1;
 
-    int a[] = {1, 2, 3, 4};
-    int b[] = {2, 4, 6, 8};
+    uint8_t e = set_bit(t , 1);
+
+    uint8_t p = 1;
+
+    printf("%d \n" , p);
 
 
-    int res = mangle_array(a, 4);
-    printf("%d \n ", res);
+    p =p << 8;
 
-    for (int i = 0; i < 4; i++) {
-        printf("%d %c", *(a + i), ' ');
+    printf("%d" , e);
 
-    }
 
-    return 0;
+
+//    int a[] = {1, 2, 3, 4};
+//    int b[] = {2, 4, 6, 8};
+//
+//
+//    int res = mangle_array(a, 4);
+//    printf("%d \n ", res);
+//
+//    for (int i = 0; i < 4; i++) {
+//        printf("%d %c", *(a + i), ' ');
+//
+//    }
+//
+//    return 0;
 }
