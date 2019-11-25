@@ -1,10 +1,12 @@
 #include <stdio.h>
-    #include <stdint.h>
+#include <stdint.h>
+#include <stdlib.h>
 
 
 #define tes 1
 #define check(x) (x == tes)
 
+void printBits(uint8_t num);
 
 int give_number() {
     return 42;
@@ -129,17 +131,73 @@ uint8_t set_bit(uint8_t reg, int n) {
 }
 
 
-void ex() {
+uint8_t unset_bit(uint8_t reg, int n) {
+    uint8_t mask = 1;
+    mask = mask << n;
 
-    char str;
+    mask = ~mask;
 
-    char s[4];
+    printBits(mask);
+    printf("\n");
 
+    return (mask & reg);
 
 }
 
+int is_set(uint8_t reg, int n) {
+
+
+    uint8_t mask = 1;
+    mask = mask << n;
+
+    if ((mask & reg) == 0) {
+        return 0;
+    } else return 1;
+
+}
+
+void get_knob_positions(uint8_t knobs, uint8_t *knob1_position, uint8_t *knod2_position) {
+    *knob1_position = knobs & 0b00001111;
+    *knod2_position = knobs >> 4;
+}
+
+void printBits(uint8_t num) {
+
+    for (int bit = 0; bit < (sizeof(uint8_t) * 8); bit++) {
+        printf("%i ", num & 0x01);
+        num = num >> 1;
+    }
+}
+
+
+typedef struct Grade {
+    struct Grade *next;
+
+//    char *name; why does this not work??? should it not be the same as the name[8]
+    char name[8];
+    float grade;
+} Grade;
+
+Grade *create_grade(Grade *next, char *name, float grade) {
+
+    Grade *new_grade = (Grade *) malloc(sizeof (Grade*));
+
+    new_grade->next = next;
+
+    for(int i = 0 ; i < 8 ; i++){
+        (*new_grade).name[i] = name[i];
+    }
+
+    new_grade->grade = grade;
+
+    return new_grade;
+}
 
 int main() {
 
+    Grade grade = {NULL, "name", 0};
+    Grade grade1 = {&grade, "name", 0};
 
+
+    return 0;
 }
