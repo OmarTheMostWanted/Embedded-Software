@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdint.h>
+    #include <stdint.h>
 
 
 #define tes 1
@@ -107,7 +107,7 @@ int make_even_positive(int *a, int size) {
 
     for (int i = 0; i < size; i++) {
         if (is_even(*(a + i)) == 1 && *(a + i) < 0) {
-            *(a+i) *= -1;
+            *(a + i) *= -1;
             res++;
         }
     }
@@ -116,11 +116,11 @@ int make_even_positive(int *a, int size) {
 
 }
 
-int mangle_array(int *a , int size){
-    return make_even_positive(a , size) + make_odd_negative(a , size);
+int mangle_array(int *a, int size) {
+    return make_even_positive(a, size) + make_odd_negative(a, size);
 }
 
-uint8_t set_bit(uint8_t reg , int n){
+uint8_t set_bit(uint8_t reg, int n) {
     uint8_t mask = 1;
 
     mask = mask << n;
@@ -128,34 +128,18 @@ uint8_t set_bit(uint8_t reg , int n){
     return mask | reg;
 }
 
+
+void ex() {
+
+    char str;
+
+    char s[4];
+
+
+}
+
+
 int main() {
 
-    uint8_t t = 1;
 
-    uint8_t e = set_bit(t , 1);
-
-    uint8_t p = 1;
-
-    printf("%d \n" , p);
-
-
-    p =p << 8;
-
-    printf("%d" , e);
-
-
-
-//    int a[] = {1, 2, 3, 4};
-//    int b[] = {2, 4, 6, 8};
-//
-//
-//    int res = mangle_array(a, 4);
-//    printf("%d \n ", res);
-//
-//    for (int i = 0; i < 4; i++) {
-//        printf("%d %c", *(a + i), ' ');
-//
-//    }
-//
-//    return 0;
 }
