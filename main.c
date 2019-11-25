@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include "main.h"
 
 
 #define tes 1
 #define check(x) (x == tes)
 
-void printBits(uint8_t num);
 
 int give_number() {
     return 42;
@@ -172,7 +172,6 @@ void printBits(uint8_t num) {
 
 typedef struct Grade {
     struct Grade *next;
-
 //    char *name; why does this not work??? should it not be the same as the name[8]
     char name[8];
     float grade;
@@ -180,11 +179,11 @@ typedef struct Grade {
 
 Grade *create_grade(Grade *next, char *name, float grade) {
 
-    Grade *new_grade = (Grade *) malloc(sizeof (Grade*));
+    Grade *new_grade = (Grade *) malloc(sizeof(Grade *));
 
     new_grade->next = next;
 
-    for(int i = 0 ; i < 8 ; i++){
+    for (int i = 0; i < 8; i++) {
         (*new_grade).name[i] = name[i];
     }
 
@@ -193,11 +192,12 @@ Grade *create_grade(Grade *next, char *name, float grade) {
     return new_grade;
 }
 
+//store_grades(int n, char *name[8], float grades[]) {
+store_grades(int n, char name[n][8], float grades[]) {
+
+}
+
 int main() {
-
-    Grade grade = {NULL, "name", 0};
-    Grade grade1 = {&grade, "name", 0};
-
 
     return 0;
 }
