@@ -179,7 +179,7 @@ typedef struct Grade {
 
 Grade *create_grade(Grade *next, char *name, float grade) {
 
-    Grade *new_grade = (Grade *) malloc(sizeof(Grade *));
+    Grade *new_grade = (Grade *) malloc(sizeof(Grade));
 
     new_grade->next = next;
 
@@ -192,12 +192,77 @@ Grade *create_grade(Grade *next, char *name, float grade) {
     return new_grade;
 }
 
-//store_grades(int n, char *name[8], float grades[]) {
-store_grades(int n, char name[n][8], float grades[]) {
+//store_grades(int n, char *name, float grades[]) {
+Grade *store_grades(int n, char names[][8], float grades[]) {
 
+    Grade *next = 0;
+
+    for (int i = 0; i < n; i++) {
+        next = create_grade(next, names[i], grades[i]);
+    }
+
+    return next;
 }
 
+//Grade *store_grades(int n, char names[][8], float grades[]) {
+//
+//    char copy[8];
+//    for(int i = 0 ; i < 8 ; i++)
+//        copy[i] = names[0][i];
+//
+//    Grade* current = create_grade(NULL , copy , grades[n]);
+//
+//    n--;
+//
+//
+//    while (n > 0) {
+//
+//        char temp[8];
+//
+//        for(int q = 0 ; q < 8 ; q++)
+//            temp[q] = names[n][q];
+//
+//        Grade* new_Grade = create_grade( current , temp , grades[n]);
+//        n--;
+//
+//        current->next = new_Grade;
+//
+//        current = new_Grade;
+//    }
+//
+//    return current;
+//}
+
+
+
+void remove_grades(Grade *root) {
+
+    Grade *current = root;
+
+    while (current != 0) {
+
+        Grade *current1 = current->next;
+
+        free(current);
+
+        current = current1;
+    }
+}
+
+
 int main() {
+
+    int n = 2;
+    char names[2][8] = {{"ass"},
+                        {"hole"}};
+    float grades[] = {10, 10};
+
+    Grade *root = store_grades(n, names, grades);
+
+
+    while (root->next != NULL)
+        printf("%s %f \n", root->name, root->grade);
+    root = root->next;
 
     return 0;
 }
