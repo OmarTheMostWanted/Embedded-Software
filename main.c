@@ -249,20 +249,81 @@ void remove_grades(Grade *root) {
     }
 }
 
+int size(Grade *grade) {
+    Grade *current = grade;
+    int n = 0;
+    while (current != 0) {
+        current = current->next;
+        n++;
+    }
+    return n;
+}
+
+Grade *reverse_list(Grade *grade) {
+
+    const int s = size(grade);
+    int count = 0;
+    char names[s][8];
+
+    float grades[s];
+
+    Grade *current = grade;
+
+    while (count < s) {
+
+        for (int i = 0; i < 8; i++) {
+
+            names[count][i] = current->name[i];
+
+        }
+        grades[count] = current->grade;
+
+        current = current->next;
+
+        count++;
+
+    }
+
+    return (store_grades(s, names, grades));
+
+}
+
+void printList(Grade *root) {
+
+    int s = size(root);
+
+    if (s == 0 || root == 0) {
+        printf("Array is has the same number of elements as the number of fucks I give\n");
+    }
+
+
+    Grade *current = root;
+
+    for (int i = 0; i < s; i++) {
+        printf("%s , %f \n", current->name, current->grade);
+        current = current->next;
+    }
+
+}
 
 int main() {
 
-    int n = 2;
-    char names[2][8] = {{"ass"},
-                        {"hole"}};
-    float grades[] = {10, 10};
+    int n = 3;
+    char names[3][8] = {{"bitch"},
+                        {"ass"},
+                        {"nigga"}};
+    float grades[] = {10, 20, 30};
 
     Grade *root = store_grades(n, names, grades);
 
+    printList(root);
 
-    while (root->next != NULL)
-        printf("%s %f \n", root->name, root->grade);
-    root = root->next;
+    printf(" reverses is ======================= \n");
+
+    printList(reverse_list(create_grade(0, "test", 111)));
+
+    printList(reverse_list(0));
+
 
     return 0;
 }
