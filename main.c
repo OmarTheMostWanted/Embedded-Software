@@ -259,7 +259,30 @@ int size(Grade *grade) {
     return n;
 }
 
-Grade *reverse_list(Grade *grade) {
+
+Grade *reverse_list1(Grade *grade) {
+
+
+    Grade *res = NULL;
+    while (grade) {
+        Grade *next = grade->next;
+        grade->next = res;
+        res = grade;
+        grade = next;
+    }
+
+    return res;
+
+
+}
+
+// defining a funtion pointer type called "rev" that returns grade and takes some para
+typedef Grade *(* rev)(Grade *grade);
+
+
+// the complier knows that this implements rev, because it have the same return type and paramters
+Grade *reverse_list (Grade *grade){
+
 
     const int s = size(grade);
     int count = 0;
@@ -306,13 +329,49 @@ void printList(Grade *root) {
 
 }
 
+
+uint64_t * interrupt_vector;
+
+void register_isr(uint8_t interrupt_source ,void (*isr)()){
+
+    interrupt_vector[interrupt_source] = (uint64_t) isr;
+
+
+}
+
+
+void execute_isr(uint8_t interrupt_source){
+
+    void (*function)() = (void (*)()) interrupt_vector[interrupt_source];
+
+    function();
+
+}
+
+
+// takes a funtion pointer
+void foo(Grade* (*bar)()){
+    //..
+}
+
+//
+void foo2(rev bar);
+
+
+
 int main() {
+
+
+// since reverse_list has the same type as rev it works
+foo(reverse_list);
+
+
 
     int n = 3;
     char names[3][8] = {{"bitch"},
                         {"ass"},
                         {"nigga"}};
-    float grades[] = {10, 20, 30};
+    float grades[] = {10, 202.1233, 30};
 
     Grade *root = store_grades(n, names, grades);
 
@@ -320,8 +379,10 @@ int main() {
 
     printf(" reverses is ======================= \n");
 
-    printList(reverse_list(create_grade(0, "test", 111)));
+    printList(reverse_list(root));
 
+    printList(reverse_list(create_grade(0, "test", 111)));
+//
     printList(reverse_list(0));
 
 
