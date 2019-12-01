@@ -1,5 +1,7 @@
 #include <stdlib.h>
 # include <string.h>
+#include <stdint.h>
+#include <stdio.h>
 
 int *alocatememory();
 
@@ -9,24 +11,22 @@ void uninitializeddata();
 
 void stringstuff();
 
+uint16_t returnNumber(uint16_t n);
+
+
 int main() {
 
-    int *a = alocatememory1();
-
-    *a = 1;
-
-    free(a); //fix mem leak
-
-
-
-    uninitializeddata();
-
-    stringstuff();
+    uint16_t n = 5;
+    printf("%d" , returnNumber(n));
 
     return 0;
 
 }
 
+uint16_t returnNumber(uint16_t n) {
+    //uint8_t res = n + 1;
+    return (n+1);
+}
 
 //int *alocatememory() {
 //
