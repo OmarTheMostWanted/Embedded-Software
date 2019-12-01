@@ -15,6 +15,7 @@ int main(int argc, char *argv[]) {
 
 
 //fix: dont use pointers and give scanf adress using &
+// better to init variables
     int operand1;
     int operand2;
     char operation;
