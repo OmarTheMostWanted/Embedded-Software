@@ -20,7 +20,10 @@ int main(int argc, char *argv[]) {
 	srand(time(NULL));
 
 	const int size = 10;
-	int * my_array = (int *) malloc(size);
+    //wrong malloc size
+//	int * my_array = (int *) malloc(size);
+    int *my_array = (int *) malloc(size * sizeof(int));
+
 
 	// Fill the array with random numbers.
 	fill_array_random(size, my_array);
@@ -32,8 +35,11 @@ int main(int argc, char *argv[]) {
 	}
 
 	// Free array.
-	for (int i = 0; i < size; ++i) {
-		free(my_array[i]);
-	}
+    //wrong free
+//	for (int i = 0; i < size; ++i) {
+//		free(my_array[i]);
+//	}
+
+    free(my_array);
 
 }

@@ -20,22 +20,29 @@
 #define _t3_config__VERSION 0x000505L
 #define _t3_config__NEW_TOKEN (-2)
 #define _t3_config__THREAD_SAFE
+
 #include "config_internal.h"
 #include <setjmp.h>
+
 struct _t3_config_this {
-	int LLscnt_[11];
-	int LLtcnt_[31];
-	int LLcsymb_;
-	int LLsymb_;
-	int LLreissue_;
-	jmp_buf LLjmp_buf_;
-	parse_context_t * LLdata_;
+    int LLscnt_[11];
+    int LLtcnt_[31];
+    int LLcsymb_;
+    int LLsymb_;
+    int LLreissue_;
+    jmp_buf LLjmp_buf_;
+    parse_context_t *LLdata_;
 };
 #define _t3_config_symb (LLthis->LLsymb_)
 #define _t3_config_data (LLthis->LLdata_)
 #define _t3_config_reissue (LLthis->LLreissue_)
-int _t3_config_parse(parse_context_t * LLuserData);
-int _t3_config_parse_include(parse_context_t * LLuserData);
-int _t3_config_parse_constraint(parse_context_t * LLuserData);
+
+int _t3_config_parse(parse_context_t *LLuserData);
+
+int _t3_config_parse_include(parse_context_t *LLuserData);
+
+int _t3_config_parse_constraint(parse_context_t *LLuserData);
+
 void _t3_config_abort(struct _t3_config_this *, int);
+
 #endif
