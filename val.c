@@ -16,8 +16,11 @@ uint16_t returnNumber(uint16_t n);
 
 int main() {
 
-    uint16_t n = 5;
-    printf("%d" , returnNumber(n));
+    int res;
+
+    scanf("%d", &res);
+
+    printf("%d" , res);
 
     return 0;
 
@@ -25,7 +28,7 @@ int main() {
 
 uint16_t returnNumber(uint16_t n) {
     //uint8_t res = n + 1;
-    return (n+1);
+    return (n + 1);
 }
 
 //int *alocatememory() {
