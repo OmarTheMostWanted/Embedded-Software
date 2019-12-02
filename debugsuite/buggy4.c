@@ -40,6 +40,6 @@ int main(int argc, char *argv[]) {
 //		free(my_array[i]);
 //	}
 
-    free(my_array);
+//    free(my_array);
 
 }
