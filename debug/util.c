@@ -25,7 +25,9 @@
 /** strdup implementation if none is provided by the environment. */
 char *_t3_config_strdup(const char *str) {
 	char *result;
-	size_t len = strlen(str);
+
+	//issue
+	size_t len = strlen(str) + 1;
 
 	if ((result = malloc(len)) == NULL)
 		return NULL;

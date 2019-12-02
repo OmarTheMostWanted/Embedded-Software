@@ -100,12 +100,15 @@ int main(int argc, char *argv[]) {
 
 	if (argc == 2) {
 		if ((file = fopen(argv[optind], "r")) == NULL)
-			fatal("Could not open input '%s': %m\n");
-	} else if (argc > 2) {
+			fatal("Could not open input '%s': %m\n", argv[optind]);
+	} else if (argc < 2) {
 		fatal("Usage: test [<test file>]\n");
 	}
 
-	path[0] = dirname(dirname(strdup(argv[optind])));
+	//issue
+	char *var = strdup(argv[optind]);
+	path[0] = dirname(dirname(var));
+	free(var);
 	path[1] = NULL;
 
 	/* Read file. */
