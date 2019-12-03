@@ -56,3 +56,4 @@ dkms.conf
 #the core dumped stuff
 vgcore.*
 
+.idea
