@@ -365,7 +365,7 @@ int main() {
 // since reverse_list has the same type as rev it works
 foo(reverse_list);
 
-
+    int *a = malloc(43535);
 
     int n = 3;
     char names[3][8] = {{"bitch"},
