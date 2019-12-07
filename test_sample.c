@@ -8,9 +8,9 @@
 #include "wordcount.h"
 #endif
 
-size_t mystrlen(const char *str) {
-    return strlen(str) + 1;
-}
+//size_t mystrlen(const char *str) {
+//    return strlen(str) + 1;
+//}
 
 void print_element(const char *key, void *data) {
     printf("(\"%s\", %s)\n", key, (char *) data);
@@ -38,6 +38,8 @@ int main() {
 
     // Insert ("ab" -> "CSE2425").
     insert_data(hm, key_1, string_1, resolve_collision);
+
+
     assert(memcmp(get_data(hm, key_1), string_1, mystrlen(string_1)) == 0);
 
     // Insert ("cd" -> "Embedded").
@@ -80,7 +82,7 @@ int main() {
     assert(get_data(hm, key_3) == NULL);
 
     // Delete the hash map.
-    delete_hashmap(hm, NULL);
+    //delete_hashmap(hm, NULL);
 
 #ifdef COUNTING_WORDS
     // Create a temporary file
