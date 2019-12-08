@@ -8,9 +8,9 @@
 #include "wordcount.h"
 #endif
 
-//size_t mystrlen(const char *str) {
-//    return strlen(str) + 1;
-//}
+size_t mystrlen(const char *str) {
+    return strlen(str) + 1;
+}
 
 void print_element(const char *key, void *data) {
     printf("(\"%s\", %s)\n", key, (char *) data);
