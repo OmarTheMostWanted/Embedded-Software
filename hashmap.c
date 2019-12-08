@@ -145,10 +145,12 @@ void remove_data(HashMap *hm, const char *key, DestroyDataCallback destroy_data)
                 }
                 if (c == 0) {
                     hm->buckets[i] = current->next;
+                    free(current->key);
                     free(current);
                     break;
                 } else {
                     prev->next = current->next;
+                    free(current->key);
                     free(current);
                     break;
                 }
@@ -168,6 +170,9 @@ void freeBucketList(Bucket *bucket, DestroyDataCallback destroy_data) {
         if (destroy_data != NULL) {
             destroy_data(bucket->data);
         }
+
+        free(bucket->key);
+
         //maybe not needed?
         bucket = NULL;
 
