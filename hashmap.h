@@ -134,17 +134,32 @@ void iterate(HashMap *hm, CallBack callBack) {
 }
 
 void *get_data(HashMap *hm, char *key) {
+
     unsigned int i = hm->size % hash(key);
-    if (hm->bucket[i] == NULL) {
+    if (*key == NULL || hm->bucket[i] == NULL) {
         return NULL;
-    } else
-        return hm->bucket[i]->data;
+    } else {
+        Bucket *current = hm->bucket[i];
+
+        while (current != NULL) {
+            if (strcmp(key, current->key) == 0) {
+                return current->data;
+            }
+            current = current->next;
+        }
+    }
+
 }
 
 void remove_data(HashMap *hm, char *key, DestroyDataCallback destroy_data) {
+
     if (key != NULL) {
+
         unsigned int i = (hm->size & hash(key));
         Bucket *current = hm->bucket[i];
+        Bucket *prev = hm->bucket[i];
+
+        int c = 0;
 
         while (current != NULL) {
 
