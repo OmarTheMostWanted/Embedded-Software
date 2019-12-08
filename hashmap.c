@@ -21,25 +21,48 @@ size_t myStrLen(const char *str) {
 HashMap *create_hashmap(size_t key_space) {
 
     HashMap *hm = (HashMap *) malloc(key_space * sizeof(Bucket *));
-    Bucket *bucket = (Bucket *) malloc(key_space * sizeof(Bucket));
+
+    //I was doing something wrong here, why?
+    //Bucket *bucket = (Bucket *) malloc(key_space * sizeof(Bucket));
+
     hm->size = key_space;
-    hm->buckets = bucket;
+    hm->buckets = (Bucket **) malloc(key_space * sizeof(Bucket));
+
 }
 
+
+char *copyString(const char *string) {
+    int len = myStrLen(string);
+    char *res = (char *) malloc(sizeof(char) * len);
+    for (int i = 0; i < len; i++) {
+        res[i] = string[i];
+    }
+
+    return res;
+}
 
 void insert_data(HashMap *hm, const char *key, void *data, ResolveCollisionCallback resolve_collision) {
 
     if (hm != NULL && key != NULL) {
         unsigned int i = (hm->size % hash(key));
+
         if (hm->buckets[i] == NULL) {
             Bucket *bucket = (Bucket *) malloc(sizeof(Bucket));
             bucket->data = data;
-            int keylen = myStrLen(key);
-            char *k = (char *) malloc(keylen * sizeof(char));
-            strcpy(k, key);
-            bucket->key = k;
+
+//            int keylen = myStrLen(key);
+
+            //this is not needed since strcpy does malloc?
+//            char *k = (char *) malloc(keylen * sizeof(char));
+
+            //(strcpy(k, key));
+
+            bucket->key = copyString(key);
+
+
             bucket->next = NULL;
             hm->buckets[i] = bucket;
+
         } else {
             Bucket *current = hm->buckets[i];
 
@@ -51,14 +74,17 @@ void insert_data(HashMap *hm, const char *key, void *data, ResolveCollisionCallb
                     return;
                 }
             }
+
             Bucket *bucket = (Bucket *) malloc(sizeof(Bucket));
             bucket->data = data;
-            int keylen = myStrLen(key);
-            char *k = (char *) malloc(keylen * sizeof(char));
-            strcpy(k, key);
-            bucket->key = k;
+
+//            int keylen = myStrLen(key);
+//            char *k = (char *) malloc(keylen * sizeof(char));
+//            strcpy(k, key);
+
+            bucket->key = copyString(key);
             bucket->next = hm->buckets[i];
-            hm->buckets = bucket;
+            hm->buckets[i] = bucket;
 
         }
     }

@@ -35,6 +35,8 @@ size_t myStrLen(const char *str);
 
 HashMap *create_hashmap(size_t key_space);
 
+char *copyString(const char *string);
+
 void insert_data(HashMap *hm, const char *key, void *data, ResolveCollisionCallback resolve_collision);
 
 void iterate(HashMap *hm, CallBack callBack);
