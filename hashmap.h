@@ -36,13 +36,13 @@ size_t myStrLen(const char *str);
 
 HashMap *create_hashmap(size_t key_space);
 
-void insert_data(HashMap *hm, char *key, void *data, ResolveCollisionCallback resolve_collision);
+void insert_data(HashMap *hm, const char *key, void *data, ResolveCollisionCallback resolve_collision);
 
 void iterate(HashMap *hm, CallBack callBack);
 
-void *get_data(HashMap *hm, char *key);
+void *get_data(HashMap *hm, const char *key);
 
-void remove_data(HashMap *hm, char *key, DestroyDataCallback destroy_data);
+void remove_data(HashMap *hm, const char *key, DestroyDataCallback destroy_data);
 
 void freeBucketList(Bucket *bucket, DestroyDataCallback destroy_data);
 
@@ -74,7 +74,7 @@ HashMap *create_hashmap(size_t key_space) {
 }
 
 
-void insert_data(HashMap *hm, char *key, void *data, ResolveCollisionCallback resolve_collision) {
+void insert_data(HashMap *hm, const char *key, void *data, ResolveCollisionCallback resolve_collision) {
 
     if (hm != NULL && key != NULL) {
         unsigned int i = (hm->size % hash(key));
@@ -129,11 +129,11 @@ void iterate(HashMap *hm, CallBack callBack) {
     }
 }
 
-void *get_data(HashMap *hm, char *key) {
+void *get_data(HashMap *hm, const char *key) {
     if (hm == NULL)
         return NULL;
     unsigned int i = hm->size % hash(key);
-    if (*key == NULL || hm->buckets[i] == NULL) {
+    if (key == NULL || hm->buckets[i] == NULL) {
         return NULL;
     } else {
         Bucket *current = hm->buckets[i];
@@ -146,7 +146,7 @@ void *get_data(HashMap *hm, char *key) {
     }
 }
 
-void remove_data(HashMap *hm, char *key, DestroyDataCallback destroy_data) {
+void remove_data(HashMap *hm, const char *key, DestroyDataCallback destroy_data) {
     if (key != NULL && hm != NULL) {
         unsigned int i = (hm->size % hash(key));
         Bucket *current = hm->buckets[i];
