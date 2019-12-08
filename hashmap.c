@@ -101,7 +101,7 @@ void iterate(HashMap *hm, CallBack callBack) {
     if (hm != NULL) {
         unsigned int size = hm->size;
 
-        int i = 0;
+        unsigned int i = 0;
         while (i < size) {
             if (hm->buckets[i] != NULL) {
                 Bucket *current = hm->buckets[i];
@@ -129,6 +129,7 @@ void *get_data(HashMap *hm, const char *key) {
             }
             current = current->next;
         }
+        return NULL;
     }
 }
 
