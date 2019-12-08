@@ -1,6 +1,7 @@
 #include "hashmap.h"
 #include <stddef.h>
 #include <string.h>
+#include <stdlib.h>
 
 
 unsigned int hash(const char *string) {
@@ -155,7 +156,7 @@ void delete_hashmap(HashMap *hm, DestroyDataCallback destroy_data) {
             }
             i++;
         }
-        free(hm->buckets);
+        free((hm->buckets));
         free(hm);
     }
 }
