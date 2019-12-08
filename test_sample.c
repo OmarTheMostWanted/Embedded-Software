@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include "hashmap.h"
+#include "hashmap.c"
 
 #ifdef COUNTING_WORDS
 #include "wordcount.h"
