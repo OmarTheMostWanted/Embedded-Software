@@ -9,7 +9,7 @@ typedef struct Bucket {
 
 typedef struct HashMap {
     int size;
-    Bucket **bucket;
+    Bucket **buckets;
 } HashMap;
 
 typedef void *(*ResolveCollisionCallback)(void *old_data, void *new_data);
@@ -34,6 +34,8 @@ void *get_data(HashMap *hm, char *key);
 
 void remove_data(HashMap *hm, char *key, DestroyDataCallback destroy_data);
 
+void delete_hashmap(HashMap *hm, DestroyDataCallback destroy_data);
+
 
 size_t mystrlen(const char *str) {
     return strlen(str) + 1;
@@ -44,7 +46,7 @@ HashMap *create_hashmap(size_t key_space) {
     HashMap *hm = (HashMap *) malloc(key_space * sizeof(Bucket *));
     Bucket *bucket = (Bucket *) malloc(key_space * sizeof(Bucket));
     hm->size = key_space;
-    hm->bucket = bucket;
+    hm->buckets = bucket;
 
 }
 
@@ -63,7 +65,7 @@ void insert_data(HashMap *hm, char *key, void *data, ResolveCollisionCallback re
 
     unsigned int i = (hm->size % hash(key));
 
-    if (hm->bucket[i] == NULL) {
+    if (hm->buckets[i] == NULL) {
 
 
         Bucket *bucket = (Bucket *) malloc(sizeof(Bucket));
@@ -80,11 +82,11 @@ void insert_data(HashMap *hm, char *key, void *data, ResolveCollisionCallback re
 
         bucket->next = NULL;
 
-        hm->bucket[i] = bucket;
+        hm->buckets[i] = bucket;
 
     } else {
 
-        Bucket *current = hm->bucket[i];
+        Bucket *current = hm->buckets[i];
 
         while (current != NULL) {
             if (strcmp(key, current->key) != 0) {
@@ -107,9 +109,9 @@ void insert_data(HashMap *hm, char *key, void *data, ResolveCollisionCallback re
 
         bucket->key = k;
 
-        bucket->next = hm->bucket[i];
+        bucket->next = hm->buckets[i];
 
-        hm->bucket = bucket;
+        hm->buckets = bucket;
 
 
     }
@@ -121,8 +123,8 @@ void iterate(HashMap *hm, CallBack callBack) {
 
     int i = 0;
     while (i < size) {
-        if (hm->bucket[i] != NULL) {
-            Bucket *current = hm->bucket[i];
+        if (hm->buckets[i] != NULL) {
+            Bucket *current = hm->buckets[i];
             while (current != NULL) {
                 callBack(current->key, current->data);
                 current = current->next;
@@ -136,10 +138,10 @@ void iterate(HashMap *hm, CallBack callBack) {
 void *get_data(HashMap *hm, char *key) {
 
     unsigned int i = hm->size % hash(key);
-    if (*key == NULL || hm->bucket[i] == NULL) {
+    if (*key == NULL || hm->buckets[i] == NULL) {
         return NULL;
     } else {
-        Bucket *current = hm->bucket[i];
+        Bucket *current = hm->buckets[i];
 
         while (current != NULL) {
             if (strcmp(key, current->key) == 0) {
@@ -155,9 +157,9 @@ void remove_data(HashMap *hm, char *key, DestroyDataCallback destroy_data) {
 
     if (key != NULL) {
 
-        unsigned int i = (hm->size & hash(key));
-        Bucket *current = hm->bucket[i];
-        Bucket *prev = hm->bucket[i];
+        unsigned int i = (hm->size % hash(key));
+        Bucket *current = hm->buckets[i];
+        Bucket *prev = hm->buckets[i];
 
         int c = 0;
 
@@ -166,13 +168,63 @@ void remove_data(HashMap *hm, char *key, DestroyDataCallback destroy_data) {
             if (strcmp(key, current->key) == 0) {
                 if (destroy_data != NULL) {
                     destroy_data(current->data);
-                    current->data = NULL;
                 }
+                if (c == 0) {
+                    hm->buckets[i] = current->next;
+                    free(current);
+                    break;
+                } else {
+
+                    prev->next = current->next;
+                    free(current);
+                    break;
+                }
+
             } else {
+                if (c != 0) {
+                    prev = current;
+                }
                 current = current->next;
+                c = 1;
             }
         }
 
     }
+
+}
+
+void freeBucket(Bucket *bucket, DestroyDataCallback destroy_data) {
+    if (bucket->next == NULL) {
+
+        if (destroy_data != NULL) {
+            destroy_data(bucket->data);
+        }
+
+        //maybe not needed?
+        bucket == NULL;
+
+        free(bucket);
+        return;
+    }
+    freeBucket(bucket->next , destroy_data);
+}
+
+void delete_hashmap(HashMap *hm, DestroyDataCallback destroy_data) {
+    if (hm != NULL) {
+        int size = hm->size;
+        int i = 0;
+
+        Bucket *current;
+        while (i < size) {
+            current = hm->buckets[i];
+            if (current != NULL) {
+                freeBucket(current, destroy_data);
+            }
+            i++;
+        }
+        free(hm->buckets);
+        free(hm);
+    }
+
 
 }

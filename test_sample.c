@@ -81,7 +81,7 @@ int main() {
     remove_data(hm, key_3, NULL);
     assert(get_data(hm, key_3) == NULL);
 
-     Delete the hash map.
+     //Delete the hash map.
     delete_hashmap(hm, NULL);
 
 #ifdef COUNTING_WORDS

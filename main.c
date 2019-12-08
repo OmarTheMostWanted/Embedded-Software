@@ -383,10 +383,10 @@ int main() {
     unsigned int i = (hm->size % hash(key_1));
 
 
-    Bucket *b = hm->bucket[i];
+    Bucket *b = hm->buckets[i];
 
     insert_data(hm, key_1, string_2, resolve_collision);
-    Bucket *c = hm->bucket[i];
+    Bucket *c = hm->buckets[i];
 
     insert_data(hm, key_2, string_2, resolve_collision);
 
