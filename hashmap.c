@@ -28,6 +28,13 @@ HashMap *create_hashmap(size_t key_space) {
     hm->size = key_space;
     hm->buckets = (Bucket **) malloc(key_space * sizeof(Bucket));
 
+
+    for (int i = 0; i < hm->size; i++) {
+        hm->buckets[i] = NULL;
+    }
+
+    return hm;
+
 }
 
 
