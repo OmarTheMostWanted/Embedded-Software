@@ -40,6 +40,8 @@ int main() {
 
     // Insert ("ab" -> "CSE2425").
     insert_data(hm, key_1, string_1, resolve_collision);
+    // Insert ("ba" -> "CSE2425").
+
     insert_data(hm, key_5, string_1, resolve_collision);
 
 
@@ -71,18 +73,18 @@ int main() {
     // Iterate the hash map
     iterate(hm, print_element);
 #endif
-//
-//    // Delete key "cd".
-//    remove_data(hm, key_2, NULL);
-//    assert(get_data(hm, key_2) == NULL);
-//
-//    // Delete key "ab".
-//    remove_data(hm, key_1, NULL);
-//    assert(get_data(hm, key_1) == NULL);
-//
-//    // Delete key "ad".
-//    remove_data(hm, key_3, NULL);
-//    assert(get_data(hm, key_3) == NULL);
+
+    // Delete key "cd".
+    remove_data(hm, key_2, NULL);
+    assert(get_data(hm, key_2) == NULL);
+
+    // Delete key "ab".
+    remove_data(hm, key_1, NULL);
+    assert(get_data(hm, key_1) == NULL);
+
+    // Delete key "ad".
+    remove_data(hm, key_3, NULL);
+    assert(get_data(hm, key_3) == NULL);
 
     //Delete the hash map.
     delete_hashmap(hm, NULL);
