@@ -35,9 +35,12 @@ int main() {
     const char *key_2 = "cd";
     const char *key_3 = "ad";
     const char *key_4 = "xy";
+    const char *key_5 = "ba";
+
 
     // Insert ("ab" -> "CSE2425").
     insert_data(hm, key_1, string_1, resolve_collision);
+    insert_data(hm, key_5, string_1, resolve_collision);
 
 
     assert(memcmp(get_data(hm, key_1), string_1, mystrlen(string_1)) == 0);
@@ -68,20 +71,20 @@ int main() {
     // Iterate the hash map
     iterate(hm, print_element);
 #endif
+//
+//    // Delete key "cd".
+//    remove_data(hm, key_2, NULL);
+//    assert(get_data(hm, key_2) == NULL);
+//
+//    // Delete key "ab".
+//    remove_data(hm, key_1, NULL);
+//    assert(get_data(hm, key_1) == NULL);
+//
+//    // Delete key "ad".
+//    remove_data(hm, key_3, NULL);
+//    assert(get_data(hm, key_3) == NULL);
 
-    // Delete key "cd".
-    remove_data(hm, key_2, NULL);
-    assert(get_data(hm, key_2) == NULL);
-
-    // Delete key "ab".
-    remove_data(hm, key_1, NULL);
-    assert(get_data(hm, key_1) == NULL);
-
-    // Delete key "ad".
-    remove_data(hm, key_3, NULL);
-    assert(get_data(hm, key_3) == NULL);
-
-     //Delete the hash map.
+    //Delete the hash map.
     delete_hashmap(hm, NULL);
 
 #ifdef COUNTING_WORDS

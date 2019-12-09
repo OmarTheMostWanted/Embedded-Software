@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 
+
 unsigned int hash(const char *string) {
     int i = 0;
     unsigned int hash = 0;
@@ -167,15 +168,13 @@ void remove_data(HashMap *hm, const char *key, DestroyDataCallback destroy_data)
 }
 
 void freeBucketList(Bucket *bucket, DestroyDataCallback destroy_data) {
+
     if (bucket->next == NULL) {
         if (destroy_data != NULL) {
             destroy_data(bucket->data);
         }
 
         free(bucket->key);
-
-        //maybe not needed?
-        bucket = NULL;
 
         free(bucket);
         return;
@@ -191,7 +190,19 @@ void delete_hashmap(HashMap *hm, DestroyDataCallback destroy_data) {
         while (i < size) {
             current = hm->buckets[i];
             if (current != NULL) {
-                freeBucketList(current, destroy_data);
+                while (current != NULL) {
+                    Bucket *temp = current->next;
+                    if (destroy_data != NULL) {
+                        destroy_data(current->data);
+                    }
+
+                    free(current->key);
+
+                    free(current);
+
+                    hm->buckets[i] = temp;
+                    current = temp;
+                }
             }
             i++;
         }
