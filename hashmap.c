@@ -21,7 +21,7 @@ size_t myStrLen(const char *str) {
 
 HashMap *create_hashmap(size_t key_space) {
 
-    HashMap *hm = (HashMap *) malloc(key_space * sizeof(Bucket *));
+    HashMap *hm = (HashMap *) malloc(key_space * sizeof(Bucket *) + sizeof(int));
 
     //I was doing something wrong here, why?
     //Bucket *bucket = (Bucket *) malloc(key_space * sizeof(Bucket));
