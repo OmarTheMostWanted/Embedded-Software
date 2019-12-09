@@ -4,8 +4,9 @@
 #include <assert.h>
 #include "hashmap.c"
 
+//#include "hashmap.h"
 #ifdef COUNTING_WORDS
-#include "wordcount.h"
+//#include "wordcount.h"
 #endif
 
 size_t mystrlen(const char *str) {
@@ -24,18 +25,20 @@ unsigned your_own_hash(const char *key) {
     return (unsigned) strlen(key) + (unsigned) *key;
 }
 
-int main() {
-    unsigned int key_space = 1024;
+void test() {
+    unsigned int key_space = 8;
     HashMap *hm = create_hashmap(key_space);
 
     char *string_1 = "CSE2425";
     char *string_2 = "Embedded";
     char *string_3 = "Software";
-    const char *key_1 = "ab";
+    const char *key_1 = "84265778465";
     const char *key_2 = "cd";
     const char *key_3 = "ad";
     const char *key_4 = "xy";
-    const char *key_5 = "ba";
+    const char *key_5 = "bab";
+    const char *key_6 = "bba";
+
 
 
     // Insert ("ab" -> "CSE2425").
@@ -43,6 +46,10 @@ int main() {
     // Insert ("ba" -> "CSE2425").
 
     insert_data(hm, key_5, string_1, resolve_collision);
+
+    insert_data(hm, key_6, string_1, resolve_collision);
+
+    insert_data(hm, key_6, string_2, resolve_collision);
 
 
     assert(memcmp(get_data(hm, key_1), string_1, mystrlen(string_1)) == 0);
@@ -107,6 +114,9 @@ int main() {
     // Close the file
     fclose(stream);
 #endif
+}
 
+int main() {
+    test();
     return 0;
 }

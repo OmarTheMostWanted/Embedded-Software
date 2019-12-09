@@ -6,7 +6,7 @@
 
 
 unsigned int hash(const char *string) {
-    int i = 0;
+    size_t i = 0;
     unsigned int hash = 0;
     while (string[i] != '\0') {
         hash += string[i];
@@ -21,13 +21,13 @@ size_t myStrLen(const char *str) {
 
 HashMap *create_hashmap(size_t key_space) {
 
-    HashMap *hm = (HashMap *) malloc(key_space * sizeof(Bucket *) + sizeof(int));
+    HashMap *hm = (HashMap *) malloc(sizeof(HashMap));
 
     //I was doing something wrong here, why?
     //Bucket *bucket = (Bucket *) malloc(key_space * sizeof(Bucket));
 
     hm->size = key_space;
-    hm->buckets = (Bucket **) malloc(key_space * sizeof(Bucket));
+    hm->buckets = (Bucket **) malloc(key_space * sizeof(Bucket *));
 
 
     for (int i = 0; i < hm->size; i++) {
@@ -52,7 +52,7 @@ char *copyString(const char *string) {
 void insert_data(HashMap *hm, const char *key, void *data, ResolveCollisionCallback resolve_collision) {
 
     if (hm != NULL && key != NULL) {
-        unsigned int i = (hm->size % hash(key));
+        unsigned int i = hash(key) % hm->size;
 
         if (hm->buckets[i] == NULL) {
             Bucket *bucket = (Bucket *) malloc(sizeof(Bucket));
@@ -119,7 +119,7 @@ void iterate(HashMap *hm, CallBack callBack) {
 void *get_data(HashMap *hm, const char *key) {
     if (hm == NULL)
         return NULL;
-    unsigned int i = hm->size % hash(key);
+    unsigned int i = hash(key) % hm->size;
     if (key == NULL || hm->buckets[i] == NULL) {
         return NULL;
     } else {
@@ -136,7 +136,7 @@ void *get_data(HashMap *hm, const char *key) {
 
 void remove_data(HashMap *hm, const char *key, DestroyDataCallback destroy_data) {
     if (key != NULL && hm != NULL) {
-        unsigned int i = (hm->size % hash(key));
+        unsigned int i = hash(key) % hm->size;
         Bucket *current = hm->buckets[i];
         Bucket *prev = hm->buckets[i];
         int c = 0;
