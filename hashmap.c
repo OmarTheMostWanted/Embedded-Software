@@ -32,6 +32,8 @@ HashMap *create_hashmap(size_t key_space) {
 
     for (int i = 0; i < hm->size; i++) {
         hm->buckets[i] = NULL;
+        hm->buckets[i]->key = NULL;
+
     }
 
     return hm;
